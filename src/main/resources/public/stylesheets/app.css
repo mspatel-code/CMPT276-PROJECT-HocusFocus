@@ -1,0 +1,39 @@
+body{
+    background: #7DCFB6;
+    font-family: "Nunito", sans-serif;
+}
+
+.pomodoro{
+    color: white;
+    font-weight: 1000;
+    
+}
+
+.pomodoro .status{
+    font-size: 4rem;
+}
+
+.pomodoro .timer{
+    font-size: 7rem;
+}
+
+.pomodoro .btn{
+    color: white;
+}
+
+#start{
+    background: #00B2CA;
+}
+
+#stop{
+    background: #F79256;
+}
+
+#reset{
+    color: black;
+    background: #FBD1A2;
+}
+
+.pomodoro .form-label{
+    font-size: 2rem;
+}
