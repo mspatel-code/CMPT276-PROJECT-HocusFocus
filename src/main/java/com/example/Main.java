@@ -58,7 +58,7 @@ public class Main {
 
   @GetMapping(path = "/pomodoro")
   public String getPomodoro(Map<String, Object> model) {
-    return "rectangle";
+    return "pomodoro";
   }
 
 
