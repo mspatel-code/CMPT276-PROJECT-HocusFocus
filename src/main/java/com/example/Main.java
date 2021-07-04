@@ -26,6 +26,9 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import org.springframework.web.bind.annotation.*; //added by me
+import org.springframework.http.MediaType; //added by me
+
 import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -52,6 +55,12 @@ public class Main {
   String index() {
     return "index";
   }
+
+  @GetMapping(path = "/pomodoro")
+  public String getPomodoro(Map<String, Object> model) {
+    return "rectangle";
+  }
+
 
   @RequestMapping("/db")
   String db(Map<String, Object> model) {
