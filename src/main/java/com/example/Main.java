@@ -61,7 +61,6 @@ public class Main {
     return "pomodoro";
   }
 
-
   @RequestMapping("/db")
   String db(Map<String, Object> model) {
     try (Connection connection = dataSource.getConnection()) {

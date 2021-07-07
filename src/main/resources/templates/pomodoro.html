@@ -3,17 +3,21 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hocus Focus Pomodoro Timer</title>
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link href="https://fonts.googleapis.com/css?family=Nunito:200,300,400,700" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-    <link rel="stylesheet" href="./stylesheets/app.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" 
+        integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w==" 
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="./stylesheets/style.css">
+    <title>Pomodoro Timer</title>
+
 </head>
 
 <body>
-    
+
     <div class="container justify-content-center text-center">
         <nav class="navbar navbar-dark navbar-expand-md">
             <a class="navbar-brand" href="#">Hocus Focus</a>
@@ -68,11 +72,28 @@
 
         </div>
 
+        <div class="todo-list-overall bg-gradient border border-5 rounded-3 py-4 my-4 mx-auto">
+            <div class="row">
+                <h1 class="status"> To-Do List</h1>
+            </div>
+            <form> 
+                <div class="d-flex w-75 mx-auto">
+                        <input type ="text" class = "todo-input form-control w-30">
+                        <button class="todo-button" type = "submit">
+                            <i class = "fas fa-plus-square"></i>
+                        </button>
+                </div>
+            </form>
+            <div class = "todo-container d-flex w-75 mx-auto">
+                <ul class = "todo-list"></ul> 
+            </div>
+        </div>
+
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
-        crossorigin="anonymous"></script>
+    integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+    crossorigin="anonymous"></script>
     <script src="./main.js"></script>
 </body>
 

@@ -3,13 +3,13 @@ body{
     font-family: "Nunito", sans-serif;
 }
 
-.pomodoro{
+.pomodoro, .todo-list-overall{
     color: white;
     font-weight: 1000;
     
 }
 
-.pomodoro .status{
+.status{
     font-size: 4rem;
 }
 
@@ -37,3 +37,24 @@ body{
 .pomodoro .form-label{
     font-size: 2rem;
 }
+
+.todo-list-overall{
+    width: 50rem;
+}
+
+.todo{
+    margin-top: 5%;
+    min-width: 25rem;
+    position: center;
+    flex: center;
+}
+
+.todo .completed{
+    text-decoration: line-through; 
+    opacity: 0.5;
+}
+
+.todo .fa-trash,.fa-check{
+    pointer-events: none;
+}
+
