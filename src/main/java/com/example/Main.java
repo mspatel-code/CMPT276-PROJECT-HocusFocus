@@ -61,6 +61,11 @@ public class Main {
     return "pomodoro";
   }
 
+  @GetMapping(path = "/admin")
+  public String getAdmin(Map<String, Object> model) {
+    return "admin";
+  }
+
   @RequestMapping("/db")
   String db(Map<String, Object> model) {
     try (Connection connection = dataSource.getConnection()) {
