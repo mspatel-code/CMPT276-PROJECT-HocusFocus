@@ -129,6 +129,29 @@ public class Main {
     }
   }
 
+  @GetMapping(path = "/authenticate")
+  public String getUserData(Map<String, Object> model, adminInfo adminInfo) {
+
+    try (Connection connection = dataSource.getConnection()) {
+      Statement stmt = connection.createStatement();
+      String sql = "SELECT user, password FROM databasename"
+      ResultSet rs2 = stmt.executeQuery(sql);
+      ArrayList<adminInfo> userData = new ArrayList<>;
+      while (rs2.next()) {
+        if (rs.getString('name') == adminInfo.getuserName()) {
+          if(rs.getString('password') == adminInfo.userPassword()) {
+            return "pomodoro";
+          }
+        else{
+          return "error_login";
+        }
+      }
+    }
+  }
+
+
+
+
   @Bean
   public DataSource dataSource() throws SQLException {
     if (dbUrl == null || dbUrl.isEmpty()) {
