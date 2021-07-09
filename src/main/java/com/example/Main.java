@@ -61,6 +61,48 @@ public class Main {
     return "pomodoro";
   }
 
+  @PostMapping(path = "/pomodoro", consumes = { MediaType.APPLICATION_FORM_URLENCODED_VALUE })
+  public String handleBrowserAdminSubmit(Map<String, Object> model, adminInfo admin) throws Exception {
+    // save the admin data into the database
+    try (Connection connection = dataSource.getConnection()) {
+      Statement stmt = connection.createStatement();
+      stmt.executeUpdate(
+          "CREATE TABLE IF NOT EXISTS admin (id serial, userName varchar(20), userType varchar(20), userPassword varchar(20))");
+      String sql = "INSERT INTO admin (userName,userType) VALUES ('" + admin.getuserName() + "' , '"
+          + admin.getuserType() + "' , '" + admin.getuserPassword() + "')";
+      stmt.executeUpdate(sql);
+      System.out.println(admin.getuserName() + " " + admin.getuserType() + " " + admin.getuserPassword());
+      return "redirect:/admin";
+    } catch (Exception e) {
+      model.put("message", e.getMessage());
+      return "error";
+    }
+  }
+
+  @GetMapping("/admin")
+  public String getAdminSuccess(Map<String, Object> model) {
+    try (Connection connection = dataSource.getConnection()) {
+      Statement stmt = connection.createStatement();
+      ResultSet rs = stmt.executeQuery("SELECT * FROM admin");
+
+      ArrayList<String> output = new ArrayList<String>();
+      while (rs.next()) {
+        String usern = rs.getString("userName");
+        String id = rs.getString("id");
+        String usert = rs.getString("userType");
+
+        output.add(id + "  |  " + usern + "  |  " + usert);
+      }
+
+      model.put("records", output);
+      return "admin";
+    } catch (Exception e) {
+      model.put("message", e.getMessage());
+      return "error";
+    }
+
+  }
+
   @RequestMapping("/db")
   String db(Map<String, Object> model) {
     try (Connection connection = dataSource.getConnection()) {

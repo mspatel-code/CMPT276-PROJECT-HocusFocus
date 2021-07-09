@@ -35,26 +35,71 @@ body{
 }
 
 .pomodoro .form-label{
-    font-size: 2rem;
+    font-size: 1.5rem;
 }
 
 .todo-list-overall{
     width: 50rem;
 }
 
-.todo{
-    margin-top: 5%;
-    min-width: 25rem;
-    position: center;
-    flex: center;
+form input, form button{
+    padding: 0.5rem;
+    font-size: 2rem;
+    border: none;
+    background: white;
+
 }
 
-.todo .completed{
+form button{
+    color: green;
+    background:  white;
+    cursor: pointer;
+    transition: all 0.3s ease;
+
+}
+
+form button:hover{
+    
+    background: green;
+    color: white;
+}
+.todo{
+    margin: 0.5rem;
+    background: lightyellow;
+    color: black;
+    display: flex;
+    font-size: 1.5rem;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.todo li{
+    flex: 1;
+}
+
+.trash-btn{
+    background: #F79256;
+    color: white;
+    border: none;
+}
+
+ .complete-btn{
+    background: #00B2CA;
+    color: white;
+    border: none;
+}
+
+ .completed{
     text-decoration: line-through; 
     opacity: 0.5;
+    background: #00B2CA;
+    color: white;
+    border: none;
 }
 
 .todo .fa-trash,.fa-check{
     pointer-events: none;
 }
+
+
 
