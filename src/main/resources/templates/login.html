@@ -13,26 +13,24 @@
     <div class="photo_box">
       <img class="photo" src="../public/stylesheets/Images/hocus_focus.jpg" alt="Students Focusing">
     </div>
-    <div class="lol">
-      <h1>Login</h1>
-      <div class="textbox">
-        <i class="fa fa-user" aria-hidden="true"> </i>
-        <input type="text" placeholder="Username" name="" value="">
-
+    <form class="classs1" action="index.html" th:action="@{/authenticate}" method="post">
+      <div class="lol">
+        <h1>Login</h1>
+        <div class="textbox">
+          <i class="fa fa-user" aria-hidden="true"> </i>
+          <input id="username" type="text" th:field=*{userName} placeholder="Username" name="" value="">
+        </div>
+        <div class="textbox">
+          <i class="fa fa-lock" aria-hidden="true"> </i>
+          <input id='password' type="password" th:field=*{userPassword} placeholder="Password" name="" value="">
+        </div>
+        <input class="btn" type="button" name="" value="Log in">
       </div>
-
-      <div class="textbox">
-        <i class="fa fa-lock" aria-hidden="true"> </i>
-        <input type="password" placeholder="Password" name="" value="">
-
-      </div>
-
-      <input class="btn" type="button" name="" value="Sign in">
-    </div>
+    </form>
   </div>
 
-
-
 </body>
+
+
 
 </html>
