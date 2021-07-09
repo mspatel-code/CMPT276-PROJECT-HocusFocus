@@ -61,6 +61,11 @@ public class Main {
     return "pomodoro";
   }
 
+  @GetMapping(path = "/signup")
+  public String getSignupForm(Map<String, Object> model) {
+    return "signup";
+  }
+
   @PostMapping(path = "/pomodoro", consumes = { MediaType.APPLICATION_FORM_URLENCODED_VALUE })
   public String handleBrowserAdminSubmit(Map<String, Object> model, adminInfo admin) throws Exception {
     // save the admin data into the database
