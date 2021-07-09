@@ -3,7 +3,7 @@ body{
     font-family: "Nunito", sans-serif;
 }
 
-.pomodoro, .todo-list-overall{
+.pomodoro, .todo-list-overall, .form-container{
     color: white;
     font-weight: 1000;
     
@@ -38,7 +38,7 @@ body{
     font-size: 1.5rem;
 }
 
-.todo-list-overall{
+.todo-list-overall, .form-container{
     width: 50rem;
 }
 
