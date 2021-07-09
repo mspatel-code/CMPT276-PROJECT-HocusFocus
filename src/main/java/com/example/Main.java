@@ -61,7 +61,7 @@ public class Main {
     return "pomodoro";
   }
 
-  @GetMapping(path = "/signup")
+  @GetMapping("/signup")
   public String getSignupForm(Map<String, Object> model) {
     return "signup";
   }
