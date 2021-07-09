@@ -66,11 +66,12 @@ public class Main {
     // save the admin data into the database
     try (Connection connection = dataSource.getConnection()) {
       Statement stmt = connection.createStatement();
-      stmt.executeUpdate("CREATE TABLE IF NOT EXISTS admin (id serial, userName varchar(20), userType varchar(20))");
+      stmt.executeUpdate(
+          "CREATE TABLE IF NOT EXISTS admin (id serial, userName varchar(20), userType varchar(20), userPassword varchar(20))");
       String sql = "INSERT INTO admin (userName,userType) VALUES ('" + admin.getuserName() + "' , '"
-          + admin.getuserType() + "')";
+          + admin.getuserType() + "' , '" + admin.getuserPassword() + "')";
       stmt.executeUpdate(sql);
-      System.out.println(admin.getuserName() + " " + admin.getuserType());
+      System.out.println(admin.getuserName() + " " + admin.getuserType() + " " + admin.getuserPassword());
       return "redirect:/admin";
     } catch (Exception e) {
       model.put("message", e.getMessage());
@@ -79,7 +80,7 @@ public class Main {
   }
 
   @GetMapping("/admin")
-  public String getRectangleSuccess(Map<String, Object> model) {
+  public String getAdminSuccess(Map<String, Object> model) {
     try (Connection connection = dataSource.getConnection()) {
       Statement stmt = connection.createStatement();
       ResultSet rs = stmt.executeQuery("SELECT * FROM admin");
