@@ -124,7 +124,7 @@ public class Main {
     }
   }
 
-  @GetMapping("/admin/{name}")
+  @GetMapping("/admin")
   public String getAdminResult(Map<String, Object> model) {
     try (Connection connection = dataSource.getConnection()) {
       Statement stmt = connection.createStatement();
@@ -161,6 +161,12 @@ public class Main {
       return "error";
     }
   }
+
+  @GetMapping("/logout")
+  public String getLogout(Map<String, Object> model) {
+    return "redirect:/pomodoro";
+  }
+
 
   @RequestMapping("/db")
   String db(Map<String, Object> model) {
