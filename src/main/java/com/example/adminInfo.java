@@ -4,9 +4,14 @@ public class adminInfo {
 
     private String userName;
     private String userType;
+    private String userPassword;
 
     public String getuserName() {
         return this.userName;
+    }
+
+    public String getuserPassword() {
+        return this.userPassword;
     }
 
     public String getuserType() {
@@ -19,6 +24,10 @@ public class adminInfo {
 
     public void setuserType(String ut) {
         this.userType = ut;
+    }
+
+    public void setuserPassword(String up) {
+        this.userPassword = up;
     }
 
 }
