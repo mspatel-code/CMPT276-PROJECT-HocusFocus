@@ -19,7 +19,7 @@
         </nav>
 
         <div class="form-container bg-gradient border border-5 rounded-3 py-4 my-4 mx-auto">
-            <form action="#" method="post" th:action="@{/adminInput}" th:object="${adminInput}}">
+            <form action="#" method="post" th:action="@{/signup}" th:object="${userInput}">
                 <div class="mb-3 w-75 mx-auto">
                     <label class="form-label" for="name">Username: </label>
                     <input class="form-control" type="text" th:field=*{userName} id="username" placeholder="username"
@@ -33,7 +33,7 @@
                 <div class="mb-3 w-75 mx-auto">
                     <label class="form-label" for="userType">User Type: </label>
                     <select class="form-select" th:field=*{userType} aria-label="userType" required>
-                        <option selected value="User">Member</option>
+                        <option selected value="Member">Member</option>
                         <option value="Admin">Admin</option>
                     </select>
                 </div>

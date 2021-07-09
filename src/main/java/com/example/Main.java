@@ -63,21 +63,28 @@ public class Main {
 
   @GetMapping("/signup")
   public String getSignupForm(Map<String, Object> model) {
+    adminInfo userInput = new adminInfo();
+    model.put("userInput", userInput);
     return "signup";
   }
 
-  @PostMapping(path = "/pomodoro", consumes = { MediaType.APPLICATION_FORM_URLENCODED_VALUE })
-  public String handleBrowserAdminSubmit(Map<String, Object> model, adminInfo admin) throws Exception {
-    // save the admin data into the database
+  @PostMapping(path = "/signup", consumes = { MediaType.APPLICATION_FORM_URLENCODED_VALUE })
+  public String handleBrowserSingupSubmit(Map<String, Object> model, adminInfo userInput) throws Exception {
+    // save the user data into the database
     try (Connection connection = dataSource.getConnection()) {
       Statement stmt = connection.createStatement();
       stmt.executeUpdate(
-          "CREATE TABLE IF NOT EXISTS admin (id serial, userName varchar(20), userType varchar(20), userPassword varchar(20))");
-      String sql = "INSERT INTO admin (userName,userType) VALUES ('" + admin.getuserName() + "' , '"
-          + admin.getuserType() + "' , '" + admin.getuserPassword() + "')";
+          "CREATE TABLE IF NOT EXISTS userLogin (id serial, userName varchar(20), userType varchar(20), userPassword varchar(20))");
+      String sql = "INSERT INTO userLogin (userName,userType,userPassword) VALUES ('" + userInput.getuserName() + "' , '"
+          + userInput.getuserType() + "' , '" + userInput.getuserPassword() + "')";
       stmt.executeUpdate(sql);
-      System.out.println(admin.getuserName() + " " + admin.getuserType() + " " + admin.getuserPassword());
-      return "redirect:/admin";
+      System.out.println(userInput.getuserName() + " " + userInput.getuserType() + " " + userInput.getuserPassword());
+      if(userInput.getuserType().equals("Admin")){
+        return "redirect:/admin";
+      }
+      else{
+        return "redirect:/pomodoro";
+      }
     } catch (Exception e) {
       model.put("message", e.getMessage());
       return "error";
@@ -88,7 +95,7 @@ public class Main {
   public String getAdminSuccess(Map<String, Object> model) {
     try (Connection connection = dataSource.getConnection()) {
       Statement stmt = connection.createStatement();
-      ResultSet rs = stmt.executeQuery("SELECT * FROM admin");
+      ResultSet rs = stmt.executeQuery("SELECT * FROM userLogin");
 
       ArrayList<String> output = new ArrayList<String>();
       while (rs.next()) {
@@ -107,6 +114,29 @@ public class Main {
     }
 
   }
+
+  
+/*   @GetMapping(path = "/authenticate")
+  public String getUserData(Map<String, Object> model, adminInfo adminInfo) {
+
+    try (Connection connection = dataSource.getConnection()) {
+      Statement stmt = connection.createStatement();
+      String sql = "SELECT user, password FROM databasename";
+      ResultSet rs2 = stmt.executeQuery(sql);
+      ArrayList<adminInfo> userData = new ArrayList<>();
+      while (rs2.next()) {
+        if (rs.getString("userName") == adminInfo.getuserName()) {
+          if(rs.getString("password") == adminInfo.userPassword()) {
+            return "pomodoro";
+          }
+        else{
+          return "error_login";
+        }
+      }
+    }
+  } */
+
+
 
   @RequestMapping("/db")
   String db(Map<String, Object> model) {
@@ -128,29 +158,6 @@ public class Main {
       return "error";
     }
   }
-
-  @GetMapping(path = "/authenticate")
-  public String getUserData(Map<String, Object> model, adminInfo adminInfo) {
-
-    try (Connection connection = dataSource.getConnection()) {
-      Statement stmt = connection.createStatement();
-      String sql = "SELECT user, password FROM databasename"
-      ResultSet rs2 = stmt.executeQuery(sql);
-      ArrayList<adminInfo> userData = new ArrayList<>;
-      while (rs2.next()) {
-        if (rs.getString('name') == adminInfo.getuserName()) {
-          if(rs.getString('password') == adminInfo.userPassword()) {
-            return "pomodoro";
-          }
-        else{
-          return "error_login";
-        }
-      }
-    }
-  }
-
-
-
 
   @Bean
   public DataSource dataSource() throws SQLException {
