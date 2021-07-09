@@ -14,31 +14,13 @@
 
 <body>
 
-    <div class="container">
+    <div class="container justify-content-center text-center">
         <nav class="navbar navbar-dark navbar-expand-md">
             <a class="navbar-brand" href="#">Hocus Focus</a>
         </nav>
 
-        <div class="userList text-left justify-content-center">
-            <h1>USERS LIST</h1>
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Username</th>
-                        <th>User Type</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr th:each="record : ${records}">
-                        <td th:text="${record.id}"></td>
-                        <td th:text="${record.name}"></td>
-                        <td th:text="${record.type}"></td>
-                        <td><a class="btn btn-danger" role="button" th:href="@{/delete/{pid}(pid = ${record.id})}">Delete</a></td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
+        <h1 class="delete">Successfully Deleted!</h1>
+        <a class="btn btn-warning" role="button" th:href="@{/admin}">Return to Admin Page</a>
     </div>
 
 

@@ -1,48 +1,54 @@
-body{
+body {
     background: #7DCFB6;
     font-family: "Nunito", sans-serif;
 }
 
-.pomodoro, .todo-list-overall, .form-container{
+.pomodoro,
+.todo-list-overall,
+.form-container,
+.userList
+.delete {
     color: white;
     font-weight: 1000;
-    
+
 }
 
-.status{
+.status {
     font-size: 4rem;
 }
 
-.pomodoro .timer{
+.pomodoro .timer {
     font-size: 7rem;
 }
 
-.pomodoro .btn{
+.pomodoro .btn {
     color: white;
 }
 
-#start{
+#start {
     background: #00B2CA;
 }
 
-#stop{
+#stop {
     background: #F79256;
 }
 
-#reset{
+#reset {
     color: black;
     background: #FBD1A2;
 }
 
-.pomodoro .form-label{
+.pomodoro .form-label {
     font-size: 1.5rem;
 }
 
-.todo-list-overall, .form-container{
+.todo-list-overall,
+.form-container {
     width: 50rem;
 }
 
-form input, form button{
+form input,
+form button {
     padding: 0.5rem;
     font-size: 2rem;
     border: none;
@@ -50,20 +56,21 @@ form input, form button{
 
 }
 
-form button{
+form button {
     color: green;
-    background:  white;
+    background: white;
     cursor: pointer;
     transition: all 0.3s ease;
 
 }
 
-form button:hover{
-    
+form button:hover {
+
     background: green;
     color: white;
 }
-.todo{
+
+.todo {
     margin: 0.5rem;
     background: lightyellow;
     color: black;
@@ -73,33 +80,36 @@ form button:hover{
     align-items: center;
 }
 
-.todo li{
+.todo li {
     flex: 1;
 }
 
-.trash-btn{
+.trash-btn {
     background: #F79256;
     color: white;
     border: none;
 }
 
- .complete-btn{
+.complete-btn {
     background: #00B2CA;
     color: white;
     border: none;
 }
 
- .completed{
-    text-decoration: line-through; 
+.completed {
+    text-decoration: line-through;
     opacity: 0.5;
     background: #00B2CA;
     color: white;
     border: none;
 }
 
-.todo .fa-trash,.fa-check{
+.todo .fa-trash,
+.fa-check {
     pointer-events: none;
 }
 
-
-
+table {
+    color: white;
+    border-color: white;
+}

@@ -22,17 +22,17 @@
             <form action="#" method="post" th:action="@{/signup}" th:object="${userInput}">
                 <div class="mb-3 w-75 mx-auto">
                     <label class="form-label" for="name">Username: </label>
-                    <input class="form-control" type="text" th:field=*{userName} id="username" placeholder="username"
+                    <input class="form-control" type="text" th:field=*{name} id="username" placeholder="username"
                         required>
                 </div>
                 <div class="mb-3 w-75 mx-auto">
                     <label class="form-label" for="password">Password: </label>
-                    <input class="form-control" type="password" th:field=*{userPassword} id="password"
+                    <input class="form-control" type="password" th:field=*{password} id="password"
                         placeholder="password" required>
                 </div>
                 <div class="mb-3 w-75 mx-auto">
                     <label class="form-label" for="userType">User Type: </label>
-                    <select class="form-select" th:field=*{userType} aria-label="userType" required>
+                    <select class="form-select" th:field=*{type} aria-label="userType" required>
                         <option selected value="Member">Member</option>
                         <option value="Admin">Admin</option>
                     </select>
