@@ -1,0 +1,92 @@
+@import "https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css";
+
+body {
+  background-image: url(images/background_image_2.jpeg);
+  font-family: sans-serif;
+}
+
+.login_box {
+  /*height:45vw;*/
+  margin: 5% auto;
+  /*width: 50%;*/
+  display: flex;
+}
+
+.photo_box {
+  margin-left: 20%;
+  height: 80vh;
+  width: 30vw;
+  background-color: #9370db;
+  flex: 1;
+  position: relative;
+  grid-column: 1 / 1;
+  grid-row: 1 / 1
+}
+
+.lol {
+  margin-right: 20%;
+  height: 80vh;
+  width: 30vw;
+  background-color: #FDF5E6;
+  border: 2px solid black;
+  border-left: 0;
+}
+
+.lol h1 {
+  font-size: 30px;
+  padding: 12px 0;
+  float: left;
+  margin-bottom: 50px;
+  margin-top: 20%;
+  margin-left: 38%;
+  border-bottom: 6px solid #4caf50;
+}
+
+.textbox {
+  width: 100%;
+  overflow: hidden;
+  font-size: 20px;
+  padding: 8px 0;
+  margin: 8px 0;
+  margin-bottom: 50px;
+  border-bottom: 1px solid #4caf50;
+}
+
+.textbox i {
+  width: 25px;
+  float: left;
+  text-align: center;
+  border: 2px solid white;
+}
+
+.textbox input {
+  color: black;
+  font-size: 15px;
+  float: left;
+  margin: 0 10px;
+  border: none;
+  outline: none;
+  background: none;
+  width: 80%;
+}
+
+.btn {
+  width: 70%;
+  background: none;
+  border: 2px solid;
+  color: black;
+  padding: 5px;
+  font-size: 15px;
+  cursor: pointer;
+  margin-left: 10%;
+}
+
+.photo {
+  border: 2px solid black;
+  background-size: contain;
+  background-repeat: no-repeat;
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  border-right: 0;
+}
