@@ -79,6 +79,14 @@ public class Main {
           + userInput.getType() + "' , '" + userInput.getPassword() + "')";
       stmt.executeUpdate(sql);
       System.out.println(userInput.getName() + " " + userInput.getType() + " " + userInput.getPassword());
+      
+      ResultSet rs = stmt.executeQuery(sql);
+      while(rs.next()) {
+        if(rs.getString("userName").equals(userInput.getName())){
+        return "error_signup";
+        }
+      }
+
       if (userInput.getType().equals("Admin")) {
         return "redirect:/admin";
       } else {
