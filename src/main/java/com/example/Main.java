@@ -75,17 +75,19 @@ public class Main {
       Statement stmt = connection.createStatement();
       stmt.executeUpdate(
           "CREATE TABLE IF NOT EXISTS userLogin (id serial, userName varchar(20), userType varchar(20), userPassword varchar(20))");
-      String sql = "INSERT INTO userLogin (userName,userType,userPassword) VALUES ('" + userInput.getName() + "' , '"
-          + userInput.getType() + "' , '" + userInput.getPassword() + "')";
-      stmt.executeUpdate(sql);
-      System.out.println(userInput.getName() + " " + userInput.getType() + " " + userInput.getPassword());
       
-      ResultSet rs = stmt.executeQuery(sql);
+      String mult = "SELECT userName FROM userLogin";
+      ResultSet rs = stmt.executeQuery(mult);
       while(rs.next()) {
         if(rs.getString("userName").equals(userInput.getName())){
         return "error_signup";
         }
       }
+      
+      String sql = "INSERT INTO userLogin (userName,userType,userPassword) VALUES ('" + userInput.getName() + "' , '"
+          + userInput.getType() + "' , '" + userInput.getPassword() + "')";
+      stmt.executeUpdate(sql);
+      System.out.println(userInput.getName() + " " + userInput.getType() + " " + userInput.getPassword());
 
       if (userInput.getType().equals("Admin")) {
         return "redirect:/admin";
