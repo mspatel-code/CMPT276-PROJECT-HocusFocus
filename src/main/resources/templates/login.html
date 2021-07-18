@@ -4,15 +4,15 @@
 <head>
   <meta charset="utf-8">
   <title>Login Page</title>
-  <link rel="stylesheet" href="./stylesheets/login.css">
+  <link rel="stylesheet" href="../stylesheets/login.css">
 </head>
 
 <body>
   <div class="login_box">
     <div class="photo_box">
-      <img class="photo" src="./stylesheets/Images/hocus_focus.jpg" alt="Students Focusing">
+      <img class="photo" src="../stylesheets/Images/hocus_focus.jpg" alt="Students Focusing">
     </div>
-    <form class="classs1" action="index.html" th:action="@{/login}" th:object="${userLogin}" method="post">
+    <form class="classs1" action="index.html" th:action="@{/pomodoro/login}" th:object="${userLogin}" method="post">
       <div class="lol">
         <h1>Login</h1>
         <div class="textbox">

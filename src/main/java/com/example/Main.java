@@ -63,14 +63,14 @@ public class Main {
     return "pomodoro";
   }
 
-  @GetMapping("/signup")
+  @GetMapping("/pomodoro/signup")
   public String getSignupForm(Map<String, Object> model) {
     Users userInput = new Users();
     model.put("userInput", userInput);
     return "signup";
   }
 
-  @PostMapping(path = "/signup", consumes = { MediaType.APPLICATION_FORM_URLENCODED_VALUE })
+  @PostMapping(path = "/pomodoro/signup", consumes = { MediaType.APPLICATION_FORM_URLENCODED_VALUE })
   public String handleBrowserSingupSubmit(Map<String, Object> model, Users userInput) throws Exception {
     // save the user data into the database
     try (Connection connection = dataSource.getConnection()) {
@@ -102,14 +102,14 @@ public class Main {
     }
   }
 
-  @GetMapping("/login")
+  @GetMapping("/pomodoro/login")
   public String getLoginForm(Map<String, Object> model) {
     Users userLogin = new Users();
     model.put("userLogin", userLogin);
     return "login";
   }
 
-  @PostMapping(path = "/login", consumes = { MediaType.APPLICATION_FORM_URLENCODED_VALUE })
+  @PostMapping(path = "/pomodoro/login", consumes = { MediaType.APPLICATION_FORM_URLENCODED_VALUE })
   public String getUserData(Map<String, Object> model, Users logInfo) {
     try (Connection connection = dataSource.getConnection()) {
       Statement stmt = connection.createStatement();
