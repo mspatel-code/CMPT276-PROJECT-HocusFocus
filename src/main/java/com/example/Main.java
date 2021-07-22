@@ -24,6 +24,8 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.SocketUtils;
+import org.springframework.util.SystemPropertyUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import org.springframework.web.bind.annotation.*; //added by me
@@ -39,6 +41,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Map;
+import java.util.*;
+import java.text.*;
 
 //login-session
 @Controller
@@ -186,6 +190,31 @@ public class Main {
     return "redirect:/pomodoro";
   }
 
+  @ResponseBody
+  @PostMapping(path = "/time", consumes = { MediaType.APPLICATION_FORM_URLENCODED_VALUE })
+  public void getUserUsage(@RequestBody String usage, HttpSession session) {
+    try (Connection connection = dataSource.getConnection()) {
+      usage = removeLastChar(usage);
+
+      Statement stmt = connection.createStatement();
+      stmt.executeUpdate(
+          "CREATE TABLE IF NOT EXISTS userUsage (id serial, userName varchar(20), userUsage smallint, date timestamp)");
+
+      if (session != null) {
+        String sql = "INSERT INTO userUsage (userName,userUsage,date) VALUES ('" + session.getAttribute("username")
+            + "' , '" + usage + "' , now())";
+
+        stmt.executeUpdate(sql);
+        
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd 'at' HH:mm:ss z");
+        Date date = new Date(System.currentTimeMillis());
+        System.out.println(session.getAttribute("username") + " " + usage + " " + date);
+      }
+    } catch (Exception e) {
+      System.out.println(e.getMessage());
+    }
+  }
+
   @RequestMapping("/db")
   String db(Map<String, Object> model) {
     try (Connection connection = dataSource.getConnection()) {
@@ -216,6 +245,13 @@ public class Main {
       config.setJdbcUrl(dbUrl);
       return new HikariDataSource(config);
     }
+  }
+
+
+  public static String removeLastChar(String s) {
+    return (s == null || s.length() == 0)
+      ? null 
+      : (s.substring(0, s.length() - 1));
   }
 
 }
