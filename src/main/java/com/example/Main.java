@@ -63,6 +63,11 @@ public class Main {
     return "pomodoro";
   }
 
+  @GetMapping(path = "/chat")
+  public String getChatApp(Map<String, Object> model) {
+    return "chat";
+  }
+
   @GetMapping("/signup")
   public String getSignupForm(Map<String, Object> model) {
     Users userInput = new Users();
