@@ -63,6 +63,11 @@ public class Main {
     return "pomodoro";
   }
 
+  @GetMapping(path = "/chat")
+  public String getChatApp(Map<String, Object> model) {
+    return "chat";
+  }
+
   @GetMapping("/signup")
   public String getSignupForm(Map<String, Object> model) {
     Users userInput = new Users();
@@ -77,15 +82,15 @@ public class Main {
       Statement stmt = connection.createStatement();
       stmt.executeUpdate(
           "CREATE TABLE IF NOT EXISTS userLogin (id serial, userName varchar(20), userType varchar(20), userPassword varchar(20))");
-      
+
       String mult = "SELECT userName FROM userLogin";
       ResultSet rs = stmt.executeQuery(mult);
-      while(rs.next()) {
-        if(rs.getString("userName").equals(userInput.getName())){
-        return "error_signup";
+      while (rs.next()) {
+        if (rs.getString("userName").equals(userInput.getName())) {
+          return "error_signup";
         }
       }
-      
+
       String sql = "INSERT INTO userLogin (userName,userType,userPassword) VALUES ('" + userInput.getName() + "' , '"
           + userInput.getType() + "' , '" + userInput.getPassword() + "')";
       stmt.executeUpdate(sql);
@@ -120,8 +125,7 @@ public class Main {
       while (rs.next()) {
         if (rs.getString("userName").equals(logInfo.getName())
             && rs.getString("userPassword").equals(logInfo.getPassword())) {
-              
-          
+
           if (rs.getString("userType").equals("Admin")) {
             return "redirect:/admin";
           } else {
@@ -178,7 +182,6 @@ public class Main {
   public String getLogout(Map<String, Object> model) {
     return "redirect:/pomodoro";
   }
-
 
   @RequestMapping("/db")
   String db(Map<String, Object> model) {
