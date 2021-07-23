@@ -29,8 +29,8 @@
                     <li class="nav-item">
                         <a href="" class="nav-link">ROOMS</a>
                     </li>
-                    <li class="nav-item">
-                        <a href="" class="nav-link">REPORT</a>
+                    <li class="nav-item" th:if="${!session.isEmpty()}">
+                        <a th:href="@{/pomodoro/report}" class="nav-link">REPORT</a>
                     </li>
                     <li class="nav-item" th:if="${session.isEmpty()}">
                         <a th:href="@{/pomodoro/login}" class="nav-link">LOGIN</a>

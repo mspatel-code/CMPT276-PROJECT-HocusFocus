@@ -215,6 +215,23 @@ public class Main {
     }
   }
 
+  @GetMapping("/pomodoro/report")
+  public String getUserUsage(Map<String, Object> model, HttpSession session){
+    try (Connection connection =  dataSource.getConnection()){
+      Statement stmt = connection.createStatement();
+      ResultSet rs = stmt.executeQuery("SELECT * FROM userUsage WHERE userName=" + "'"+ session.getAttribute("username")+ "'");
+      int usage = 0;
+      while(rs.next()){
+        usage += rs.getInt("userUsage");
+      }
+      model.put("records", usage);
+      return "report";
+    } catch (Exception e){
+      model.put("message", e.getMessage());
+      return "error";
+    }
+  }
+
   @RequestMapping("/db")
   String db(Map<String, Object> model) {
     try (Connection connection = dataSource.getConnection()) {
