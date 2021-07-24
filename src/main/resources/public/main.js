@@ -96,7 +96,7 @@ function timer(){
         sec.innerText = "00";
 
         $.ajax('/time', {
-            type: 'POST',  // http method
+            type: 'POST',  // http methods
             data: workDuration.value,  // data to submit
             success: function(){
                 console.log(workDuration.value);
