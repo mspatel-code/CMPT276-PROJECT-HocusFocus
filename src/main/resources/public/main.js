@@ -65,7 +65,7 @@ stop.addEventListener('click', function(){
     startTimer = undefined;
 })
 
-var audio = new Audio("http://soundbible.com/grab.php?id=1531&type=mp3");
+var audio = new Audio("https://www.myinstants.com/media/sounds/alarm_clock.mp3");
 
 //start timer function
 function timer(){
@@ -94,6 +94,14 @@ function timer(){
         stats.innerText = "Work";
         min.innerText = workDuration.value;
         sec.innerText = "00";
+
+        $.ajax('/time', {
+            type: 'POST',  // http method
+            data: workDuration.value,  // data to submit
+            success: function(){
+                console.log(workDuration.value);
+            }
+        })
     }
 
 }

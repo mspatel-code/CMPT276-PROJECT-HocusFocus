@@ -24,10 +24,15 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.SocketUtils;
+import org.springframework.util.SystemPropertyUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import org.springframework.web.bind.annotation.*; //added by me
 import org.springframework.http.MediaType; //added by me
+
+import javax.servlet.http.HttpServletRequest; //added for session
+import javax.servlet.http.HttpSession; //addedd for session
 
 import javax.sql.DataSource;
 import java.sql.Connection;
@@ -36,8 +41,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Map;
-
-//main
+import java.util.*;
+import java.text.*;
 
 @Controller
 @SpringBootApplication
@@ -62,21 +67,22 @@ public class Main {
   public String getPomodoro(Map<String, Object> model) {
     return "pomodoro";
   }
-
+  
   @GetMapping(path = "/chat")
   public String getChatApp(Map<String, Object> model) {
     return "chat";
   }
 
-  @GetMapping("/signup")
+  @GetMapping("/pomodoro/signup")
   public String getSignupForm(Map<String, Object> model) {
     Users userInput = new Users();
     model.put("userInput", userInput);
     return "signup";
   }
 
-  @PostMapping(path = "/signup", consumes = { MediaType.APPLICATION_FORM_URLENCODED_VALUE })
-  public String handleBrowserSingupSubmit(Map<String, Object> model, Users userInput) throws Exception {
+  @PostMapping(path = "/pomodoro/signup", consumes = { MediaType.APPLICATION_FORM_URLENCODED_VALUE })
+  public String handleBrowserSingupSubmit(Map<String, Object> model, Users userInput, HttpSession session)
+      throws Exception {
     // save the user data into the database
     try (Connection connection = dataSource.getConnection()) {
       Statement stmt = connection.createStatement();
@@ -96,26 +102,25 @@ public class Main {
       stmt.executeUpdate(sql);
       System.out.println(userInput.getName() + " " + userInput.getType() + " " + userInput.getPassword());
 
-      if (userInput.getType().equals("Admin")) {
-        return "redirect:/admin";
-      } else {
-        return "redirect:/pomodoro";
-      }
+      session.setAttribute("username", userInput.getName());
+      session.setAttribute("type", userInput.getType());
+
+      return "redirect:/pomodoro";
     } catch (Exception e) {
       model.put("message", e.getMessage());
       return "error";
     }
   }
 
-  @GetMapping("/login")
+  @GetMapping("/pomodoro/login")
   public String getLoginForm(Map<String, Object> model) {
     Users userLogin = new Users();
     model.put("userLogin", userLogin);
     return "login";
   }
 
-  @PostMapping(path = "/login", consumes = { MediaType.APPLICATION_FORM_URLENCODED_VALUE })
-  public String getUserData(Map<String, Object> model, Users logInfo) {
+  @PostMapping(path = "/pomodoro/login", consumes = { MediaType.APPLICATION_FORM_URLENCODED_VALUE })
+  public String getUserData(Map<String, Object> model, Users logInfo, HttpSession session) {
     try (Connection connection = dataSource.getConnection()) {
       Statement stmt = connection.createStatement();
       String sql = "SELECT userName, userPassword, userType FROM userLogin";
@@ -125,12 +130,10 @@ public class Main {
       while (rs.next()) {
         if (rs.getString("userName").equals(logInfo.getName())
             && rs.getString("userPassword").equals(logInfo.getPassword())) {
-
-          if (rs.getString("userType").equals("Admin")) {
-            return "redirect:/admin";
-          } else {
-            return "redirect:/pomodoro";
-          }
+          
+          session.setAttribute("username", rs.getString("userName"));
+          session.setAttribute("type", rs.getString("userType"));
+          return "redirect:/pomodoro";
         }
       }
       return "error_login";
@@ -140,19 +143,25 @@ public class Main {
     }
   }
 
-  @GetMapping("/admin")
-  public String getAdminResult(Map<String, Object> model) {
+  @GetMapping("/pomodoro/admin")
+  public String getAdminResult(Map<String, Object> model, HttpSession session) {
     try (Connection connection = dataSource.getConnection()) {
       Statement stmt = connection.createStatement();
+      if (!session.getAttribute("type").equals("Admin")) {
+        return "error_admin";
+      }
+
       ResultSet rs = stmt.executeQuery("SELECT * FROM userLogin");
 
       ArrayList<Users> output = new ArrayList<Users>();
       while (rs.next()) {
-        Users user = new Users();
-        user.setName(rs.getString("userName"));
-        user.setId(rs.getInt("id"));
-        user.setType(rs.getString("userType"));
-        output.add(user);
+        if (!rs.getString("userName").equals(session.getAttribute("username"))) {
+          Users user = new Users();
+          user.setName(rs.getString("userName"));
+          user.setId(rs.getInt("id"));
+          user.setType(rs.getString("userType"));
+          output.add(user);
+        }
       }
 
       model.put("records", output);
@@ -179,9 +188,55 @@ public class Main {
   }
 
   @GetMapping("/logout")
-  public String getLogout(Map<String, Object> model) {
+  public String getLogout(Map<String, Object> model, HttpSession session) {
+    session.removeAttribute("username");
+    session.invalidate();
     return "redirect:/pomodoro";
   }
+
+
+  @ResponseBody
+  @PostMapping(path = "/time", consumes = { MediaType.APPLICATION_FORM_URLENCODED_VALUE })
+  public void getUserUsage(@RequestBody String usage, HttpSession session) {
+    try (Connection connection = dataSource.getConnection()) {
+      usage = removeLastChar(usage);
+
+      Statement stmt = connection.createStatement();
+      stmt.executeUpdate(
+          "CREATE TABLE IF NOT EXISTS userUsage (id serial, userName varchar(20), userUsage smallint, date timestamp)");
+
+      if (session != null) {
+        String sql = "INSERT INTO userUsage (userName,userUsage,date) VALUES ('" + session.getAttribute("username")
+            + "' , '" + usage + "' , now())";
+
+        stmt.executeUpdate(sql);
+        
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd 'at' HH:mm:ss z");
+        Date date = new Date(System.currentTimeMillis());
+        System.out.println(session.getAttribute("username") + " " + usage + " " + date);
+      }
+    } catch (Exception e) {
+      System.out.println(e.getMessage());
+    }
+  }
+
+  @GetMapping("/pomodoro/report")
+  public String getUserUsage(Map<String, Object> model, HttpSession session){
+    try (Connection connection =  dataSource.getConnection()){
+      Statement stmt = connection.createStatement();
+      ResultSet rs = stmt.executeQuery("SELECT * FROM userUsage WHERE userName=" + "'"+ session.getAttribute("username")+ "'");
+      int usage = 0;
+      while(rs.next()){
+        usage += rs.getInt("userUsage");
+      }
+      model.put("records", usage);
+      return "report";
+    } catch (Exception e){
+      model.put("message", e.getMessage());
+      return "error";
+    }
+  }
+
 
   @RequestMapping("/db")
   String db(Map<String, Object> model) {
@@ -213,6 +268,13 @@ public class Main {
       config.setJdbcUrl(dbUrl);
       return new HikariDataSource(config);
     }
+  }
+
+
+  public static String removeLastChar(String s) {
+    return (s == null || s.length() == 0)
+      ? null 
+      : (s.substring(0, s.length() - 1));
   }
 
 }
