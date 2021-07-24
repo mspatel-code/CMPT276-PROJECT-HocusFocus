@@ -1,8 +1,8 @@
 @import "https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css";
 
 body {
-  background-image: url(Images/background_image_2.jpeg);
-  font-family: sans-serif;
+  background: #7DCFB6;
+  font-family: "Nunito", sans-serif;
 }
 
 .login_box {
@@ -12,6 +12,7 @@ body {
   display: flex;
 }
 
+/*
 .photo_box {
   margin-left: 20%;
   height: 80vh;
@@ -22,7 +23,7 @@ body {
   grid-column: 1 / 1;
   grid-row: 1 / 1
 }
-
+*/
 .lol {
   margin-right: 20%;
   height: 80vh;
@@ -81,6 +82,7 @@ body {
   margin-left: 10%;
 }
 
+/*
 .photo {
   border: 2px solid black;
   background-size: contain;
@@ -90,3 +92,4 @@ body {
   position: absolute;
   border-right: 0;
 }
+*/
