@@ -44,7 +44,6 @@ import java.util.Map;
 import java.util.*;
 import java.text.*;
 
-//login-session
 @Controller
 @SpringBootApplication
 public class Main {
@@ -67,6 +66,11 @@ public class Main {
   @GetMapping(path = "/pomodoro")
   public String getPomodoro(Map<String, Object> model) {
     return "pomodoro";
+  }
+  
+  @GetMapping(path = "/chat")
+  public String getChatApp(Map<String, Object> model) {
+    return "chat";
   }
 
   @GetMapping("/pomodoro/signup")
@@ -126,7 +130,7 @@ public class Main {
       while (rs.next()) {
         if (rs.getString("userName").equals(logInfo.getName())
             && rs.getString("userPassword").equals(logInfo.getPassword())) {
-
+          
           session.setAttribute("username", rs.getString("userName"));
           session.setAttribute("type", rs.getString("userType"));
           return "redirect:/pomodoro";
@@ -190,6 +194,7 @@ public class Main {
     return "redirect:/pomodoro";
   }
 
+
   @ResponseBody
   @PostMapping(path = "/time", consumes = { MediaType.APPLICATION_FORM_URLENCODED_VALUE })
   public void getUserUsage(@RequestBody String usage, HttpSession session) {
@@ -231,6 +236,7 @@ public class Main {
       return "error";
     }
   }
+
 
   @RequestMapping("/db")
   String db(Map<String, Object> model) {
