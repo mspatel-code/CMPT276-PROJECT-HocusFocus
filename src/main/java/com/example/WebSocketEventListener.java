@@ -10,6 +10,8 @@ import org.springframework.web.socket.messaging.SessionConnectedEvent;
 import org.springframework.web.socket.messaging.SessionDisconnectEvent;
 import org.slf4j.Logger;
 
+import static java.lang.String.format;
+
 @Component
 public class WebSocketEventListener {
 
@@ -27,15 +29,16 @@ public class WebSocketEventListener {
     public void handleWebSocketDisconnectListener(SessionDisconnectEvent event) {
         StompHeaderAccessor headerAccessor = StompHeaderAccessor.wrap(event.getMessage());
 
-        String username = (String) headerAccessor.getSessionAttributes().get("username");
+        String username = (String) headerAccessor.getSessionAttributes().get("name");
+        String roomId = (String) headerAccessor.getSessionAttributes().get("room_id");
         if (username != null) {
             logger.info("User Disconnected : " + username);
 
-            ChatMessagePojo chatMessagePojo = new ChatMessagePojo();
-            chatMessagePojo.setType(ChatMessagePojo.MessageType.LEAVE);
-            chatMessagePojo.setSender(username);
+            ChatMessagePojo message = new ChatMessagePojo();
+            message.setType(ChatMessagePojo.MessageType.LEAVE);
+            message.setSender(username);
 
-            messagingTemplate.convertAndSend("/topic/public", chatMessagePojo);
+            messagingTemplate.convertAndSend(format("/room/%s", roomId), message);
         }
     }
 }
