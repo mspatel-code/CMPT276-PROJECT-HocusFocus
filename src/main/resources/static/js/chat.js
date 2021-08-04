@@ -66,10 +66,10 @@ function enterRoom(newRoomId) {
 
     //display roomId
     roomIdDisplay.textContent = roomId;
-    topic = '/app/chat/${newRoomId}';
+    topic = `/app/chat/${newRoomId}`;
     
     // Subscribe to the room
-    currentSubscription = stompClient.subscribe('/room/${roomId}', onMessageReceived);
+    currentSubscription = stompClient.subscribe(`/room/${roomId}`, onMessageReceived);
     
     // Tell your username to the server
     stompClient.send(`${topic}/addUser`,
@@ -83,7 +83,7 @@ function sendMessage(event) {
     var messageContent = messageInput.value.trim();
     var username = document.querySelector('#name').value.trim();
     var roomId = document.querySelector('#room').value.trim();
-    topic = '/app/chat/${roomId}';
+    topic = `/app/chat/${roomId}`;
     if(messageContent && stompClient) {
         var chatMessage = {
             sender: username,
