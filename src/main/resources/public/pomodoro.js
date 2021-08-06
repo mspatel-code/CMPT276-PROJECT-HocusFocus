@@ -96,6 +96,7 @@ function timer(){
         min.innerText = workDuration.value;
         sec.innerText = "00";
 
+        //send data to server
         $.ajax('/time', {
             type: 'POST',  // http methods
             data: workDuration.value,  // data to submit
@@ -103,6 +104,7 @@ function timer(){
                 console.log(workDuration.value);
             }
         })
+
     }
 
 }
