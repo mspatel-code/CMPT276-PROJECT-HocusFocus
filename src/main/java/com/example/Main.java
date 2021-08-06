@@ -226,10 +226,32 @@ public class Main {
       Statement stmt = connection.createStatement();
       ResultSet rs = stmt.executeQuery("SELECT * FROM userUsage WHERE userName=" + "'"+ session.getAttribute("username")+ "'");
       int usage = 0;
+      int shortest = 0;
+      int longest = 0;
+      float avg = 0;
+      int count = 0; //to calculate # of times user worked
+
       while(rs.next()){
+        if(rs.getInt("userUsage") > longest){
+          longest = rs.getInt("userUsage");
+        } 
+        if(rs.getInt("userUsage") < shortest || shortest == 0){
+          shortest =  rs.getInt("userUsage");
+        }
         usage += rs.getInt("userUsage");
+        count++;
       }
-      model.put("records", usage);
+      if(count != 0){
+        avg = (float) usage/ count;
+      }
+
+      Report reports = new Report();
+      reports.setTotal(usage);
+      reports.setAvg(avg);
+      reports.setLongest(longest);
+      reports.setShortest(shortest);
+
+      model.put("records", reports);
       return "report";
     } catch (Exception e){
       model.put("message", e.getMessage());
