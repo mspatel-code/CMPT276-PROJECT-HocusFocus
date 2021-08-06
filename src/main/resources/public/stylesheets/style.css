@@ -116,9 +116,13 @@ form button:hover {
     pointer-events: none;
 }
 
-table {
+.table {
     color: white;
     border-color: white;
+}
+
+h1{
+    color:white;
 }
 
 select{

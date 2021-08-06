@@ -31,12 +31,18 @@
                     <tr>
                         <th>Username</th>
                         <th>Total Worktime (minutes)</th>
+                        <th>Average Worktime (minutes)</th>
+                        <th>Longest Session (minutes)</th>
+                        <th>Shortest Session (minutes)</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
+                    <tr th:each = "record: ${records}">
                         <td th:text="${session.username}"></td>
-                        <td th:text="${records}"></td>
+                        <td th:text="${records.total}"></td>
+                        <td th:text="${records.avg}"></td>
+                        <td th:text="${records.longest}"></td>
+                        <td th:text="${records.shortest}"></td>
                     </tr>
                 </tbody>
             </table>
