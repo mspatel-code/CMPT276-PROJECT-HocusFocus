@@ -98,7 +98,7 @@ public class Main {
       }
 
       String sql = "INSERT INTO userLogin (userName,userType,userPassword) VALUES ('" + userInput.getName() + "' , '"
-          + userInput.getType() + "' , '" + userInput.getPassword() + "')";
+          + userInput.getType() + "' , '" + userInput.getPassword() +  "')";
       stmt.executeUpdate(sql);
       System.out.println(userInput.getName() + " " + userInput.getType() + " " + userInput.getPassword());
 
