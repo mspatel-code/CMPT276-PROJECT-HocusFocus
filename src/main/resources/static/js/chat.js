@@ -7,9 +7,13 @@ var messageForm = document.querySelector('#messageForm');
 var messageInput = document.querySelector('#message');
 var messageArea = document.querySelector('#messageArea');
 var connectingElement = document.querySelector('.connecting');
+var roomIdDisplay = document.querySelector('#room-id-display');
 
 var stompClient = null;
 var username = null;
+var roomId = null;
+var currentSubscription;
+var topic = null;
 
 var colors = [
     '#2196F3', '#32c787', '#00BCD4', '#ff5652',
@@ -18,6 +22,7 @@ var colors = [
 
 function connect(event) {
     username = document.querySelector('#name').value.trim();
+    Cookies.set('name', username);
 
     if(username) {
         usernamePage.classList.add('hidden');
@@ -33,7 +38,10 @@ function connect(event) {
 
 
 function onConnected() {
-    // Subscribe to the Public Topic
+    roomId = document.querySelector('#room').value.trim();
+    enterRoom(roomId);
+    connectingElement.classList.add('hidden');
+/*     // Subscribe to the Public Topic
     stompClient.subscribe('/topic/public', onMessageReceived);
 
     // Tell your username to the server
@@ -42,7 +50,7 @@ function onConnected() {
         JSON.stringify({sender: username, type: 'JOIN'})
     )
 
-    connectingElement.classList.add('hidden');
+    connectingElement.classList.add('hidden'); */
 }
 
 
@@ -51,23 +59,45 @@ function onError(error) {
     connectingElement.style.color = 'red';
 }
 
+function enterRoom(newRoomId) {
+    // Assign roomId to cookies
+    var roomId = newRoomId;
+    Cookies.set('roomId', room);
+
+    //display roomId
+    roomIdDisplay.textContent = roomId;
+    topic = `/app/chat/${newRoomId}`;
+    
+    // Subscribe to the room
+    currentSubscription = stompClient.subscribe(`/room/${roomId}`, onMessageReceived);
+    
+    // Tell your username to the server
+    stompClient.send(`${topic}/addUser`,
+      {},
+      JSON.stringify({sender: username, type: 'JOIN'})
+    );
+
+  }
 
 function sendMessage(event) {
     var messageContent = messageInput.value.trim();
+    var username = document.querySelector('#name').value.trim();
+    var roomId = document.querySelector('#room').value.trim();
+    topic = `/app/chat/${roomId}`;
     if(messageContent && stompClient) {
         var chatMessage = {
             sender: username,
-            content: messageInput.value,
+            content: messageContent,
             type: 'CHAT'
         };
-        stompClient.send("/app/chat.sendMessage", {}, JSON.stringify(chatMessage));
+        stompClient.send(`${topic}/sendMessage`, {}, JSON.stringify(chatMessage));
         messageInput.value = '';
     }
     event.preventDefault();
 }
 
 
-function onMessageReceived(payload) {
+function onMessageReceived(payload) { 
     var message = JSON.parse(payload.body);
 
     var messageElement = document.createElement('li');
