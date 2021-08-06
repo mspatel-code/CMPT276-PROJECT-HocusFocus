@@ -3,7 +3,7 @@ package com.example;
 public class Report{
 
     private int total;
-    private float avg;
+    private double avg;
     private int shortest;
     private int longest;
 
@@ -13,10 +13,10 @@ public class Report{
     public void setTotal(int total){
         this.total = total;
     }
-    public float getAvg(){
+    public double getAvg(){
         return avg;
     }
-    public void setAvg(float avg){
+    public void setAvg(double avg){
         this.avg = avg;
     }
     public int getShortest(){

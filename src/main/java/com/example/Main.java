@@ -228,7 +228,7 @@ public class Main {
       int usage = 0;
       int shortest = 0;
       int longest = 0;
-      float avg = 0;
+      double avg = 0;
       int count = 0; //to calculate # of times user worked
 
       while(rs.next()){
@@ -242,7 +242,7 @@ public class Main {
         count++;
       }
       if(count != 0){
-        avg = (float) usage/ count;
+        avg = (double) usage/ count;
       }
 
       Report reports = new Report();
