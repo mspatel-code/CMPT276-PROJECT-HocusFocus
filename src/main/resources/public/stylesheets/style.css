@@ -7,10 +7,17 @@ body {
 .todo-list-overall,
 .form-container,
 .userList
-.delete {
+.delete 
+{
     color: white;
     font-weight: 1000;
 
+}
+
+.quotes-overall{
+    color: white;
+    font-size: 1.5rem;
+    font-weight: 1000;
 }
 
 .status {
@@ -38,7 +45,7 @@ body {
     background: #FBD1A2;
 }
 
-.pomodoro .form-label {
+.pomodoro .form-label{
     font-size: 1.5rem;
 }
 
@@ -151,3 +158,4 @@ select{
     background: white;
     color: green;
 }
+
