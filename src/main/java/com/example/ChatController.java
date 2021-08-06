@@ -16,22 +16,6 @@ import static java.lang.String.format;
 @Controller
 public class ChatController {
 
-    /*
-     * @MessageMapping("/chat.sendMessage")
-     * 
-     * @SendTo("/topic/public") public ChatMessagePojo sendMessage(@Payload
-     * ChatMessagePojo chatMessagePojo) { return chatMessagePojo; }
-     * 
-     * @MessageMapping("/chat.addUser")
-     * 
-     * @SendTo("/topic/public") public ChatMessagePojo addUser(@Payload
-     * ChatMessagePojo chatMessagePojo, SimpMessageHeaderAccessor headerAccessor) {
-     * 
-     * // Add username in web socket session
-     * headerAccessor.getSessionAttributes().put("username",
-     * chatMessagePojo.getSender()); return chatMessagePojo; }
-     */
-
     private static final Logger logger = LoggerFactory.getLogger(ChatController.class);
     @Autowired
     private SimpMessageSendingOperations messagingTemplate;
